@@ -1,10 +1,12 @@
 from PIL import Image
 from torch.utils import data
 
+
 class DataSet(data.Dataset):
-    'Characterizes a dataset for PyTorch'
+    """Characterizes a dataset for PyTorch"""
+
     def __init__(self, args, examples, labels, transform, is_train):
-        'Initialization'
+        """Initialization"""
         self.labels = labels
         self.examples = examples
         self.transform = transform
@@ -14,15 +16,14 @@ class DataSet(data.Dataset):
         self.is_train = is_train
 
     def __len__(self):
-        'Denotes the total number of samples'
+        """Denotes the total number of samples"""
         return len(self.examples)
 
     def __getitem__(self, idx):
-        'Generates one sample of data'
+        """Generates one sample of data"""
         id = self.examples[idx]
         # Convert to RGB to avoid png.
         X = Image.open(self.image_dir + id).convert('RGB')
         X = self.transform(X)
         label = self.labels[id]
-        return X,label
-
+        return X, label
